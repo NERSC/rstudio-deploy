@@ -1,0 +1,5 @@
+source("http://bioconductor.org/biocLite.R")
+biocLite('GenomicAlignments')
+biocLite('Rsamtools')
+biocLite('rtracklayer')
+
