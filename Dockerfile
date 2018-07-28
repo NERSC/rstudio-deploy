@@ -20,36 +20,33 @@ RUN \
 RUN \
    echo "%_netsharedpath /sys:/proc" >> /etc/rpm/macros.dist && \
    yum install -y epel-release && \
-   yum update -y && \
-   yum install -y R nginx
+   yum update -y
 
 RUN \
-    wget https://download2.rstudio.org/rstudio-server-rhel-1.0.136-x86_64.rpm && \
-    yum install -y --nogpgcheck rstudio-server-rhel-1.0.136-x86_64.rpm && \
-    rm *.rpm
-
+   yum install -y nginx curl zsh ksh csh bzip2
 
 RUN \
-    yum clean all && \
-    yum makecache fast && \
-    yum -y install curl-devel libxml2-devel
+   wget -q https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+   sh ./Miniconda3-latest-Linux-x86_64.sh -b -p /anaconda3
 
-ADD R-packages /tmp/R-packages
-RUN \
-    Rscript /tmp/R-packages
+ENV PATH /anaconda3/bin:$PATH
 
-ADD R-biolite /tmp/R-biolite
-RUN \
-    Rscript /tmp/R-biolite
+#ADD R-packages /tmp/R-packages
+#RUN \
+#    Rscript /tmp/R-packages
+
+#ADD R-biolite /tmp/R-biolite
+#RUN \
+#    Rscript/tmp/R-biolite
 
 ADD ./nginx.conf /etc/nginx/nginx.conf
 ADD ./entrypoint.sh /entrypoint.sh
 
 RUN  localedef -i en_US -f UTF-8 en_US.UTF-8
 
-ENV R_HOME /usr/lib64/R
-ENV R_DO_DIR /usr/share/doc/R-3.3.2/
-ENV LANG en_US.UTF-8 
+#ENV R_HOME /usr/lib64/R
+#ENV R_DO_DIR /usr/share/doc/R-3.3.2/
+#ENV LANG en_US.UTF-8 
 
 CMD [ ]
 ENTRYPOINT [ "/entrypoint.sh" ]
