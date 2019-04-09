@@ -5,10 +5,7 @@
 #service nslcd restart
 echo "Starting services"
 nslcd
-if [ ! -z $NGINX ] ; then
-  nginx
-fi
-
+#nginx
 if [ -z $DEBUG ] ; then
   /usr/lib/rstudio-server/bin/rserver  --server-daemonize=0
 else
