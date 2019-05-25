@@ -29,7 +29,17 @@ RUN \
    wget -q https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
    sh ./Miniconda3-latest-Linux-x86_64.sh -b -p /anaconda3
 
+
 ENV PATH /anaconda3/bin:$PATH
+
+RUN conda install -c r rstudio
+
+RUN \
+    wget https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.2.1335-x86_64.rpm && \
+    yum install -y --nogpgcheck rstudio-server-rhel-1.2.1335-x86_64.rpm && \
+    rm *.rpm
+
+ADD rserver.conf /etc/rstudio/rserver.conf
 
 #ADD R-packages /tmp/R-packages
 #RUN \
