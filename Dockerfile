@@ -39,7 +39,10 @@ RUN \
     yum install -y --nogpgcheck rstudio-server-rhel-1.2.1335-x86_64.rpm && \
     rm *.rpm
 
-ADD rserver.conf /etc/rstudio/rserver.conf
+ADD . /src/
+RUN \
+    cp /src/rserver.conf /etc/rstudio/rserver.conf && \
+    cp /src/encrypted-sign-in.htm /usr/lib/rstudio-server/www/templates/
 
 #ADD R-packages /tmp/R-packages
 #RUN \
