@@ -1,5 +1,8 @@
 #%PAM-1.0
 
+auth       [success=ignore default=2] pam_mfa.so ldap_server=ldaps://128.55.194.30 ldap_base=ou=people,ou=cori,ou=Host,o=ldapsvc,dc=nersc,dc=gov ldap_attr=mfa
+auth       sufficient  pam_linotp.so url=https://otpproxy.nersc.gov/validate/simplecheck nosslcertverify nosslhostnameverify realm=nersc hide_otp_input prompt=password:
+auth       requisite   pam_deny.so
 auth       required     pam_ldap.so
 
 account    include      system-auth
